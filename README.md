@@ -72,7 +72,7 @@ Modify the style of a percussion part:
 ```latex
 \score {
     \header {
-        piece = "The Title (Beat Part)"
+        % Omit some code.
     }
 
     <<
@@ -80,7 +80,7 @@ Modify the style of a percussion part:
         % Use a cajon as if it is a drum kit.
         drumStyleTable = #drums-style
     } \drummode {
-        \beat
+        % Omit some code.
     }
     >>
 
