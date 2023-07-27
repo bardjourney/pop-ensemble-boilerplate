@@ -168,6 +168,12 @@ beat = {
         }
 
         <<
+        % Create the chord name part.
+        \new ChordNames {
+            % Recall the chord names we wrote.
+            \chord
+        }
+
         \new Staff {
             \clef treble
             \key \piece-key \major
@@ -198,6 +204,12 @@ beat = {
         }
 
         <<
+        % Create the chord name part.
+        \new ChordNames {
+            % Recall the chord names we wrote.
+            \chord
+        }
+
         \new Staff {
             \clef "treble_8"
             \key \piece-key \major
@@ -225,6 +237,12 @@ beat = {
         }
 
         <<
+        % Create the chord name part.
+        \new ChordNames {
+            % Recall the chord names we wrote.
+            \chord
+        }
+
         \new Staff {
             \clef bass
             \key \piece-key \major
