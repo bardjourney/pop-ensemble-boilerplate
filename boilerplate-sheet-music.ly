@@ -66,7 +66,7 @@ bassline = {
 }
 
 % Record the beats of a piece.
-beat = {
+beat = \drummode {
     % Write your beats here.
     s1
 }
