@@ -10,7 +10,7 @@
 \version "2.22.1"
 
 % Adjust the size of a sheet music.
-#(set-global-staff-size 28)
+#(set-global-staff-size 20)
 
 % Crop extra spaces in a sheet music.
 % Useful when generating PNG images.
@@ -18,16 +18,21 @@
 
 % Set the tuning of guitaleles,
 %  which is not prebuilt in LilyPond.
-guitalele-tuning = #'(a, d g c' e' a')
+guitalele-tuning = \stringTuning <a d' g' c'' e'' a''>
 
 % Set the tuning of baritone ukuleles,
 %  which is not prebuilt in LilyPond.
-baritone-ukulele-tuning = #'(d, g, b, e)
+baritone-ukulele-tuning = \stringTuning <d g b e'>
 
 % The parameters used by a piece.
-piece-key = c
-piece-time = 4/4
-piece-tempo = 88
+piece-parameter = {
+    % Set the key signature.
+    \key c \major
+    % Set the time signature.
+    \time 4/4
+    % Set the tempo.
+    \tempo 4 = 88
+}
 
 % Record the chords of a piece.
 % \chords is a builtin command in LilyPond.
@@ -39,36 +44,109 @@ chord = \chordmode {
 
     % Write your chord names here.
     s1
+    \bar "|."  % The end of a piece.
 }
 
 % Record the melody of a piece.
 melody = {
     % Write your melody here.
     s1
+    \bar "|."
 }
 
 % Record the lyrics of a piece.
 lyric = \lyricmode {
     % Write your lyrics here.
     Lorem4 ipsum4 dolor4 sit8 amet8
+    \bar "|."
 }
 
-% Record the chords of a piece.
+% Record the harmony of a piece.
 harmony = {
-    % Write your chords here.
+    % Write your harmony here.
     s1
+    \bar "|."
 }
 
 % Record the bassline of a piece.
 bassline = {
     % Write your bassline here.
     s1
+    \bar "|."
 }
 
 % Record the beats of a piece.
 beat = \drummode {
     % Write your beats here.
     s1
+    \bar "|."
+}
+
+% Record the piece.
+piece = {
+    \new StaffGroup <<
+        % Create the chord name part.
+        \tag #'chord \new ChordNames {
+            % Recall the chord names we wrote.
+            \chord
+        }
+
+        % Create the melody part.
+        \new Staff \with {
+            instrumentName = "Melody"
+            midiInstrument = "voice oohs"
+        } {
+            % Use treble clef.
+            \clef treble
+            % Recall the parameters of the piece.
+            \piece-parameter
+            % Recall the melody we wrote.
+            \melody
+        }
+        \new Lyrics \lyricmode {
+            % Recall the lyrics we wrote.
+            \lyric
+        }
+
+        % Create the chordal part.
+        \new Staff \with {
+            instrumentName = "Harmony"
+            midiInstrument = "acoustic guitar (nylon)"
+        } {
+            % Use treble clef.
+            % Record the notes higher in an octave.
+            \clef "treble_8"
+            % Recall the harmony we wrote.
+            \harmony
+        }
+
+        % Create the bass part.
+        \new Staff \with {
+            instrumentName = "Bassline"
+            midiInstrument = "acoustic bass"
+        } {
+            % Use bass clef.
+            \clef bass
+            % Recall the bassline we wrote.
+            \bassline
+        }
+
+        % Create the beat part.
+        \new DrumStaff \with {
+            instrumentName = "Beat"
+            \override MidiInstrument #'midiInstrument = #"drum kit"
+
+            % Assume a cajon here.
+            % Record the sheet music as if a drum kit.
+            %
+            % Change the style table if you
+            %  use other percussion instrument.
+            drumStyleTable = #drums-style
+        } \drummode {
+            % Recall the beats we wrote.
+            \beat
+        }
+    >>
 }
 
 % Create a sheet music.
@@ -81,87 +159,25 @@ beat = \drummode {
         tagline = ##f
     }
 
-    % Full score.
+    % Create the MIDI for a piece.
+    % We can explore a piece freely before your ensemble play it.
     \score {
-        \new StaffGroup <<
-            % Create the chord name part.
-            \new ChordNames {
-                % Recall the chord names we wrote.
-                \chord
-            }
+        % Keep the chord names from the MIDI output.
+        \removeWithTag #'chord
+        \piece
+        \midi {}
+    }
 
-            % Create the melody part.
-            \new Staff \with {
-                instrumentName = "Melody"
-                midiInstrument = "voice oohs"
-            } {
-                % Use treble clef.
-                \clef treble
-                % Set the key signature of a piece.
-                \key \piece-key \major
-                % Set the time signature of a piece.
-                \time \piece-time
-                % Set the tempo of a piece.
-                \tempo 4 = \piece-tempo
-                % Recall the melody we wrote.
-                \melody
-            }
-            \new Lyrics \lyricmode {
-                % Recall the lyrics we wrote.
-                \lyric
-            }
-
-            % Create the chordal part.
-            \new Staff \with {
-                instrumentName = "Chord"
-                midiInstrument = "acoustic guitar (nylon)"
-            } {
-                % Use treble clef.
-                % Record the notes higher in an octave.
-                \clef "treble_8"
-                % Recall the harmony we wrote.
-                \harmony
-            }
-
-            % Create the bass part.
-            \new Staff \with {
-                instrumentName = "Bass"
-                midiInstrument = "acoustic bass"
-            } {
-                % Use bass clef.
-                \clef bass
-                % Recall the bassline we wrote.
-                \bassline
-            }
-
-            % Create the beat part.
-            \new DrumStaff \with {
-                instrumentName = "Beat"
-                \override MidiInstrument #'midiInstrument = #"drum kit"
-
-                % Assume a cajon here.
-                % Record the sheet music as if a drum kit.
-                %
-                % Change the style table if you
-                %  use other percussion instrument.
-                drumStyleTable = #drums-style
-            } \drummode {
-                % Recall the beats we wrote.
-                \beat
-            }
-        >>
-
+    % Create the full score.
+    \score {
+        \piece
         % Set the layout of a sheet music.
         \layout {}
-
-        % Create the MIDI for a piece.
-        % We can explore a piece freely before your ensemble play it.
-        \midi {}
     }
 
     \pageBreak
 
-    % Create a melody part.
+    % Create the melody part.
     \score {
         \header {
             piece = "The Title (Melody Part)"
@@ -176,9 +192,7 @@ beat = \drummode {
 
         \new Staff {
             \clef treble
-            \key \piece-key \major
-            \time \piece-time
-            \tempo 4 = \piece-tempo
+            \piece-parameter
             \melody
         }
         \new Lyrics \lyricmode {
@@ -200,7 +214,7 @@ beat = \drummode {
     % Create the harmony part.
     \score {    
         \header {
-            piece = "The Title (Chord Part)"
+            piece = "The Title (Harmony Part)"
         }
 
         <<
@@ -212,9 +226,7 @@ beat = \drummode {
 
         \new Staff {
             \clef "treble_8"
-            \key \piece-key \major
-            \time \piece-time
-            \tempo 4 = \piece-tempo
+            \piece-parameter
             \harmony
         }
         \new TabStaff \with {
@@ -230,10 +242,10 @@ beat = \drummode {
 
     \pageBreak
 
-    % Create the bass part
+    % Create the bassline part
     \score {
         \header {
-            piece = "The Title (Bass Part)"
+            piece = "The Title (Bassline Part)"
         }
 
         <<
@@ -245,9 +257,7 @@ beat = \drummode {
 
         \new Staff {
             \clef bass
-            \key \piece-key \major
-            \time \piece-time
-            \tempo 4 = \piece-tempo
+            \piece-parameter
             \bassline
         }
         \new TabStaff \with {
@@ -274,6 +284,8 @@ beat = \drummode {
             % Use a cajon as if it is a drum kit.
             drumStyleTable = #drums-style
         } \drummode {
+            \clef percussion
+            \piece-parameter
             \beat
         }
         >>
