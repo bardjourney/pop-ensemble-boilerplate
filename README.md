@@ -102,4 +102,4 @@ You may change the name of this boilerplate sheet music as well.
 
 The boilerplate itself is licensed under MIT.
 
-You keep your own all the pieces generated with the boilerplate in any license you prefer.
+You keep your own pieces generated with the boilerplate in any license you prefer.

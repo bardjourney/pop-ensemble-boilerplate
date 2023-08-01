@@ -2,7 +2,7 @@
 %
 % Copyright (c) 2023 Jenna Chen. Licensed under MIT
 %
-% You keep your own all the pieces generated with the boilerplate
+% You keep your own pieces generated with the boilerplate
 %  in any license you prefer.
 
 
