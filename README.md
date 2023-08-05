@@ -4,14 +4,22 @@ LilyPond boilerplate for small acoustic pop ensembles.
 
 ## Default Setting
 
-The boilerplate sheet is designed for a four-player acoustic pop ensemble:
+There are two variants here.
+
+A three-player ensemble setting:
+
+* Melody: vocal or ukulele
+* Harmony: acoustic guitar
+* Beat: cajon
+
+A four-player ensemble setting:
 
 * Melody: vocal or guitalele
 * Harmony: baritone ukulele
 * Bassline: acoustic bass guitar or ukulele bass
 * Beat: cajon
 
-If your ensemble setting varies from this one, modify the boilerplate by yourself.
+If your ensemble setting varies from either, modify the boilerplate by yourself.
 
 ## System Requirements
 
@@ -27,7 +35,7 @@ $ git clone https://github.com/bardjourney/pop-ensemble-boilerplate.git my-music
 
 Alternatively, download the ZIP file or create a new repo out of this template repo.
 
-Edit *boilerplate-sheet-music.ly* to create your own piece. Here are some hints:
+Edit either boilerplate to create your own piece. Here are some hints:
 
 Always write down the notes of a piece in a variable:
 
@@ -93,13 +101,13 @@ You may use any percussion instrument(s) other than cajon. Modify the style tabl
 Finally, compile the sheet music with LilyPond:
 
 ```shell
-$ lilypond boilerplate-sheet-music.ly
+$ lilypond your-next-awesome-piece.ly
 ```
 
 You may change the name of this boilerplate sheet music as well.
 
 ## Copyright
 
-The boilerplate itself is licensed under MIT.
+The boilerplates are licensed under MIT.
 
 You keep your own pieces generated with the boilerplate in any license you prefer.

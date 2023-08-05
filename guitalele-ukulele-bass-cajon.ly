@@ -12,10 +12,6 @@
 % Adjust the size of a sheet music.
 #(set-global-staff-size 20)
 
-% Crop extra spaces in a sheet music.
-% Useful when generating PNG images.
-#(ly:set-option 'crop #t)
-
 % Set the tuning of guitaleles,
 %  which is not prebuilt in LilyPond.
 guitalele-tuning = \stringTuning <a d' g' c'' e'' a''>
